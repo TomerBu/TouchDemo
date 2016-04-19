@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new HatView(this, null));
+        setContentView(new MultiTouchView(this, null));
     }
 
     @Override
