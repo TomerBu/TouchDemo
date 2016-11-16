@@ -6,9 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.HashMap;
 
 /**
  * Created by TomerBu on 07/05/2015.
@@ -16,8 +17,7 @@ import android.view.View;
 public class MultiTouchView extends View {
     private static final float RADIUS = 50;
     private Paint mPaint;
-    //private HashMap<Integer, PointF> mActivePointers = new HashMap<>();
-    private SparseArray<PointF> mActivePointers = new SparseArray<>();
+    private HashMap<Integer, PointF> mActivePointers = new HashMap<>();
     private static final int[] COLORS = {Color.BLUE, Color.YELLOW, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.GRAY};
 
     //Constructors
@@ -77,9 +77,8 @@ public class MultiTouchView extends View {
                     }
                 }
                 break;
-            case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
-            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
                 mActivePointers.remove(pointerId);
                 break;
         }
@@ -89,10 +88,7 @@ public class MultiTouchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //for (Integer key : mActivePointers.keySet()) {
-
-        for (int i = 0; i < mActivePointers.size(); i++) {
-            int key = mActivePointers.keyAt(i);
+        for (Integer key : mActivePointers.keySet()) {
             PointF pointF = mActivePointers.get(key);
             if (pointF != null) {
                 mPaint.setColor(COLORS[key % 7]);
