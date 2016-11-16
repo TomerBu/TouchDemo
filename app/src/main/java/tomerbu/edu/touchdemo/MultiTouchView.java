@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
  */
 public class MultiTouchView extends View {
     private static final float RADIUS = 50;
+    private static final String TAG = "TomerBu";
     private Paint mPaint;
     private HashMap<Integer, PointF> mActivePointers = new HashMap<>();
     private static final int[] COLORS = {Color.BLUE, Color.YELLOW, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.GRAY};
@@ -76,6 +78,20 @@ public class MultiTouchView extends View {
                         pointf.y = event.getY(i);
                     }
                 }
+
+
+                //Logging the History:
+                int historySize = event.getHistorySize();
+                Log.d(TAG, "HistorySize: " + historySize);
+                for (int h = 0; h < historySize; h++) {
+                    for (int p = 0; p < event.getPointerCount(); p++) {
+                        float historicalX = event.getHistoricalX(p, h);
+                        float historicalY = event.getHistoricalY(p, h);
+                        Log.d(TAG, "HistoricalX: " + historicalX);
+                        Log.d(TAG, "HistoricalY: " + historicalY);
+                    }
+                }
+
                 break;
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP:
